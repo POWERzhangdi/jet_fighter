@@ -1,5 +1,7 @@
 package com.jet.fighter.date;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -554,10 +556,10 @@ public class DateTimeUtils {
         if (null == endTime || endTime.length() == ZERO) {
             throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
         }
-        if (startTime.charAt(3) != ':') {
+        if (startTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
         }
-        if (endTime.charAt(3) != ':') {
+        if (endTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
         }
         boolean result = false;
@@ -587,10 +589,10 @@ public class DateTimeUtils {
         if (null == endTime || endTime.length() == ZERO) {
             throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
         }
-        if (startTime.charAt(3) != ':') {
+        if (startTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
         }
-        if (endTime.charAt(3) != ':') {
+        if (endTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
         }
         boolean result = false;
@@ -780,5 +782,18 @@ public class DateTimeUtils {
         }
 
         private String type;
+    }
+
+
+    public static void main(String[] args) {
+
+        //2022-11-03 10:00:00
+        LocalDateTime plannedDepartureTime = LocalDateTime.of(2022,11,3,10,0,0);
+        //2022-11-03 13:18:53
+        LocalDateTime actualDepartureTime = LocalDateTime.of(2022,11,3,13,18,53);
+
+        long time = DateTimeUtils.diffLocalDateTime(plannedDepartureTime,actualDepartureTime, DateTimeUtils.TimeUnit.SECONDS,false);
+        BigDecimal dateTime = new BigDecimal(time).divide(new BigDecimal("3600"),2, RoundingMode.HALF_DOWN);
+        System.out.println(dateTime);
     }
 }
