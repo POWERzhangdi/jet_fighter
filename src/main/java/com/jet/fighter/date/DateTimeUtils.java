@@ -696,35 +696,17 @@ public class DateTimeUtils {
 
         long diffTime = ZERO;
 
-        Duration duration = null;
-        if (timeUnit != TimeUnit.YEARS || timeUnit != TimeUnit.MONTHS) {
-            duration = Duration.between(startTime, endTime);
-        }
+        Period period = Period.between(startTime, endTime);
 
         switch (timeUnit) {
             case YEARS:
-                diffTime = ChronoUnit.YEARS.between(startTime, endTime);
+                diffTime = period.getYears();
                 break;
             case MONTHS:
-                diffTime = ChronoUnit.MONTHS.between(startTime, endTime);
+                diffTime = period.getMonths();
                 break;
             case DAYS:
-                diffTime = duration.toDays();
-                break;
-            case HOURS:
-                diffTime = duration.toHours();
-                break;
-            case MINUTES:
-                diffTime = duration.toMinutes();
-                break;
-            case SECONDS:
-                diffTime = duration.toMillis() * 1000;
-                break;
-            case MILLIS:
-                diffTime = duration.toMillis();
-                break;
-            case NANOS:
-                diffTime = duration.toNanos();
+                diffTime = period.getDays();
                 break;
         }
 
