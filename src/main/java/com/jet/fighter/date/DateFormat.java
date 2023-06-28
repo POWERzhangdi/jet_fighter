@@ -77,6 +77,13 @@ public interface DateFormat {
 
     /**
      * 当前时间为: 2022-08-06 17:03:01
+     * 格式化后: 17-03
+     */
+    String HH__mm = "HHmm";
+
+
+    /**
+     * 当前时间为: 2022-08-06 17:03:01
      * 格式化后: 05:03
      */
     String hh_mm = "hh:mm";

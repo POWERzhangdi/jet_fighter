@@ -1,13 +1,16 @@
 package com.jet.fighter.date;
 
+import com.jet.fighter.route.TmsVehicleLineRoute;
+import com.jet.fighter.string.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
-import java.util.Locale;
-import java.util.UnknownFormatFlagsException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 没事多吃华莱士,喷射战士
@@ -698,35 +701,20 @@ public class DateTimeUtils {
 
         long diffTime = ZERO;
 
-        Duration duration = null;
+         Period period = null;
         if (timeUnit != TimeUnit.YEARS || timeUnit != TimeUnit.MONTHS) {
-            duration = Duration.between(startTime, endTime);
+            period = Period.between(startTime, endTime);
         }
 
         switch (timeUnit) {
             case YEARS:
-                diffTime = ChronoUnit.YEARS.between(startTime, endTime);
+                diffTime = period.getYears();
                 break;
             case MONTHS:
-                diffTime = ChronoUnit.MONTHS.between(startTime, endTime);
+                diffTime =  period.getMonths();
                 break;
             case DAYS:
-                diffTime = duration.toDays();
-                break;
-            case HOURS:
-                diffTime = duration.toHours();
-                break;
-            case MINUTES:
-                diffTime = duration.toMinutes();
-                break;
-            case SECONDS:
-                diffTime = duration.toMillis() * 1000;
-                break;
-            case MILLIS:
-                diffTime = duration.toMillis();
-                break;
-            case NANOS:
-                diffTime = duration.toNanos();
+                diffTime = period.getDays();
                 break;
         }
 
@@ -784,16 +772,84 @@ public class DateTimeUtils {
         private String type;
     }
 
+    public static LocalDateTime zoneSerializerConvert(LocalDateTime date, String headZone, String localZone) {
+        ZoneId oldZone = ZoneId.of(localZone);
+        ZoneId newZone = ZoneId.of(headZone);
+        date = date.atZone(oldZone).withZoneSameInstant(newZone).toLocalDateTime();
+        return date;
+    }
+
+
+
 
     public static void main(String[] args) {
-
-        //2022-11-03 10:00:00
-        LocalDateTime plannedDepartureTime = LocalDateTime.of(2022,11,3,10,0,0);
-        //2022-11-03 13:18:53
-        LocalDateTime actualDepartureTime = LocalDateTime.of(2022,11,3,13,18,53);
-
-        long time = DateTimeUtils.diffLocalDateTime(plannedDepartureTime,actualDepartureTime, DateTimeUtils.TimeUnit.SECONDS,false);
-        BigDecimal dateTime = new BigDecimal(time).divide(new BigDecimal("3600"),2, RoundingMode.HALF_DOWN);
-        System.out.println(dateTime);
+//        //堆排序
+//        int[] arr = {1, 3, 5, 4, 2, 7, 8, 6, 9};
+//        heapSort(arr);
+//        System.out.println(Arrays.toString(arr));
+        LocalDateTime one = LocalDateTime.of(2023,9,9,0,0,0);
+        LocalDateTime two = LocalDateTime.of(2023,9,9,0,0,0);
+        System.out.println(one.isEqual(two));
     }
+
+    private static void heapSort(int[] arr) {
+        //构建大顶堆
+        for (int i = arr.length / 2 - 1; i >= 0; i--) {
+            //从第一个非叶子节点从下至上，从右至左调整结构
+            adjustHeap(arr, i, arr.length);
+        }
+
+        //调整堆结构+交换堆顶元素与末尾元素
+        for (int j = arr.length - 1; j > 0; j--) {
+            //将堆顶元素与末尾元素进行交换
+            swap(arr, 0, j);
+            //重新对堆进行调整
+            adjustHeap(arr, 0, j);
+        }
+    }
+
+    private static void swap(int[] arr, int i, int j) { //交换元素
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    private static void adjustHeap(int[] arr, int i, int length) { //调整堆
+        int temp = arr[i]; //先取出当前元素i
+        for (int k = i * 2 + 1; k < length; k = k * 2 + 1) { //从i结点的左子结点开始，也就是2i+1处开始
+            if (k + 1 < length && arr[k] < arr[k + 1]) { //如果左子结点小于右子结点，k指向右子结点
+                k++;
+            }
+            if (arr[k] > temp) { //如果子节点大于父节点，将子节点值赋给父节点（不用进行交换）
+                arr[i] = arr[k];
+                i = k;
+            } else {
+                break;
+            }
+        }
+        arr[i] = temp; //将temp值放到最终的位置
+    }
+
+    /**
+     * 获取中心编码
+     *
+     * @return
+     */
+    private static String getCentCode(String... strings) {
+
+        for (int i = strings.length - 1; i > -1; i--) {
+            if (!StringUtils.isEmpty(strings[i])) {
+                return strings[i];
+            }
+        }
+
+        return "";
+    }
+
+    public static String multiply(BigDecimal one,BigDecimal two){
+        BigDecimal result = one.multiply(two).setScale(2,RoundingMode.HALF_DOWN);
+        return result.stripTrailingZeros().toPlainString() + "%";
+    }
+
+
 }

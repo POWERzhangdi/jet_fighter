@@ -1,5 +1,7 @@
 package com.jet.fighter.aviator;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONWriter;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.AviatorEvaluatorInstance;
 import com.googlecode.aviator.Options;
@@ -9,8 +11,12 @@ import com.jet.fighter.collectios.CollectionUtils;
 import com.jet.fighter.string.StringUtils;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 /**
@@ -293,4 +299,20 @@ public class DynamicExpressionUtils {
         return null;
     }
 
+    public static void main(String[] args) {
+
+        LocalDate now = LocalDate.now();
+        LocalDate now1 = LocalDate.now().plusDays(1);
+        LocalDate now2 = LocalDate.now().minusDays(1);
+        LocalDate now3 = LocalDate.now().plusDays(2);
+
+
+        TreeMap treeMap = new TreeMap();
+
+        treeMap.put(now1,"3");
+        treeMap.put(now2,"1");
+        treeMap.put(now,"2");
+        treeMap.put(now3,"4");
+        System.out.println(treeMap);
+    }
 }
