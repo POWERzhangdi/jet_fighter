@@ -162,7 +162,7 @@ public class SplitTaskUtils <T>{
      * @Param [java.util.List<T>]
      * @Return java.util.List<java.util.List < T>>
      */
-    private List<List<T>> getTaskList(List<T> tList) {
+    public List<List<T>> getTaskList(List<T> tList) {
         if(CollectionUtils.isEmpty(tList)){
             throw new RuntimeException("list is null");
         }
@@ -192,7 +192,7 @@ public class SplitTaskUtils <T>{
      * @Param [java.util.List<T>]
      * @Return java.util.List<java.util.List < T>>
      */
-    private List<List<T>> getStreamTaskList(List<T> tList) {
+    public List<List<T>> getStreamTaskList(List<T> tList) {
         if(CollectionUtils.isEmpty(tList)){
             throw new RuntimeException("list is null");
         }
@@ -218,7 +218,7 @@ public class SplitTaskUtils <T>{
      * @Param [java.util.List<T>]
      * @Return java.util.List<java.util.List < T>>
      */
-    private List<List<T>> getGuavaTaskList(List<T> tList) {
+    public List<List<T>> getGuavaTaskList(List<T> tList) {
         if(CollectionUtils.isEmpty(tList)){
             throw new RuntimeException("list is null");
         }
@@ -234,7 +234,7 @@ public class SplitTaskUtils <T>{
      * @Param [java.util.List<T>]
      * @Return java.util.Map<java.lang.Integer, java.util.List < T>>
      */
-    private Map<Integer, List<T>> getTaskMap(List<T> tList) {
+    public Map<Integer, List<T>> getTaskMap(List<T> tList) {
         if(CollectionUtils.isEmpty(tList)){
             throw new RuntimeException("list is null");
         }
