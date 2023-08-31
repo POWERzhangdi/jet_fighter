@@ -30,7 +30,6 @@
             <version>${aviator.version}</version>
         </dependency>
 
-
     </dependencies>
 
     <build>

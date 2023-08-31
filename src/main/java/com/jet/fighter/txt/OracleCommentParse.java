@@ -1,6 +1,8 @@
 package com.jet.fighter.txt;
 
-import java.io.File;
+import com.jet.fighter.date.DateFormat;
+import com.jet.fighter.date.DateTimeUtils;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.LinkedHashMap;
@@ -9,22 +11,30 @@ import java.util.Scanner;
 
 /**
  * 没事多吃华莱士,喷射战士
- * oracel 将 注释 跟 查询语句融合，成注释需要的
+ * <p>
+ * 解析 Oracle 注释 为查询语句
+ * <p>
+ * Description: {@link OracleCommentParse}
  *
- * @author 张迪
- * @version 1.0.0
- * @ClassName OracelCommentPrase.java
- * @Description TODO
- * @createTime 2023年06月21日 16:44
+ * @Author: di.zhang
+ * @Date: 2022/8/26 17:23
+ * @Version: v1.0
  */
-public class OracelCommentPrase {
+public class OracleCommentParse {
 
 
+    /**
+     * 示例：
+     * comment on column table.name IS '姓名';
+     * comment on column table.age IS '年龄';
+     * 解析后的sql:
+     * select name as "姓名",age as "年龄" from table
+     */
     public static void main(String[] args) {
 
-        String fileName = "D:\\截取数据oracel.txt";
+        String fileName = "文件地址\\文件名称.txt";
 
-        String table = "YL_TMS_ALL_FAST_ROUTE";
+        String table = "表明";
 
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
@@ -48,7 +58,6 @@ public class OracelCommentPrase {
 
                 map.put(column, columnComment);
 
-                System.out.println(str);
             }
 
 
@@ -66,8 +75,6 @@ public class OracelCommentPrase {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
 }

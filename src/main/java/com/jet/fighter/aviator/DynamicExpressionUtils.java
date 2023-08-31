@@ -1,7 +1,5 @@
 package com.jet.fighter.aviator;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONWriter;
 import com.googlecode.aviator.AviatorEvaluator;
 import com.googlecode.aviator.AviatorEvaluatorInstance;
 import com.googlecode.aviator.Options;

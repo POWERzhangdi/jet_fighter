@@ -554,10 +554,10 @@ public class DateTimeUtils {
         if (null == endTime || endTime.length() == ZERO) {
             throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
         }
-        if (startTime.charAt(3) != ':') {
+        if (startTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
         }
-        if (endTime.charAt(3) != ':') {
+        if (endTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
         }
         boolean result = false;
@@ -587,10 +587,10 @@ public class DateTimeUtils {
         if (null == endTime || endTime.length() == ZERO) {
             throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
         }
-        if (startTime.charAt(3) != ':') {
+        if (startTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
         }
-        if (endTime.charAt(3) != ':') {
+        if (endTime.charAt(2) != ':') {
             throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
         }
         boolean result = false;
