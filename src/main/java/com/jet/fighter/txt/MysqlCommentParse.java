@@ -1,8 +1,5 @@
 package com.jet.fighter.txt;
 
-import com.jet.fighter.date.DateFormat;
-import com.jet.fighter.date.DateTimeUtils;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.LinkedHashMap;
@@ -12,52 +9,52 @@ import java.util.Scanner;
 /**
  * 没事多吃华莱士,喷射战士
  * <p>
- * 解析 Oracle 注释 为查询语句
+ * 解析 mysql 注释 为查询语句
  * <p>
- * Description: {@link OracleCommentParse}
+ * Description: {@link MysqlCommentParse}
  *
  * @Author: di.zhang
  * @Date: 2022/8/26 17:23
  * @Version: v1.0
  */
-public class OracleCommentParse {
-
+public class MysqlCommentParse {
 
     /**
-     * 示例：
-     * comment on column table.name IS '姓名';
-     * comment on column table.age IS '年龄';
+     * 注释示例：
+     * sno         int unsigned auto_increment comment '学号',
+     * name        varchar(50) not null comment '姓名',
+     * create_date date not null comment '创建时间',
      * 解析后的sql:
-     * select name as "姓名",age as "年龄" from table
+     * select SNO as '学号',NAME as '姓名',CREATE_DATE as '创建时间' from account
      */
     public static void main(String[] args) {
 
         String fileName = "文件地址\\文件名称.txt";
 
-        String table = "表明";
+        String table = "表名";
 
         LinkedHashMap<String, String> map = new LinkedHashMap<>();
 
         try {
             Scanner sc = new Scanner(new FileReader(fileName));
             //分隔符
-            sc.useDelimiter(";");
+            sc.useDelimiter(",");
             //按分隔符读取字符串
             while (sc.hasNext()) {
                 String str = sc.next().toUpperCase();
 
-                //判断表名字出现的位置
-                int tableIndex = str.indexOf(table);
+                //判断字段的位置 默认第一个空格出现的位置
+                int indexColumn = str.indexOf(" ");
 
-                //判断is最后出现的位置
-                int isIndex = str.lastIndexOf("IS");
+                //判断注释comment出现的最后位置
+                int indexComment = str.lastIndexOf("COMMENT");
                 //获取字段
-                String column = str.substring(tableIndex + table.length() + 1, isIndex - 1);
+                String column = str.substring(0,indexColumn);
 
                 //获取字段注释
-                String columnComment = str.substring(isIndex + 4, str.length() - 1);
+                String columnComment = str.substring(indexComment + 7, str.length());
 
-                map.put(column, columnComment);
+                map.put(column, columnComment.trim());
 
             }
 
@@ -67,7 +64,7 @@ public class OracleCommentParse {
             sb.append("select ");
             for (Map.Entry<String, String> entry : map.entrySet()) {
 
-                sb.append(entry.getKey()).append(" as ").append("\"" + entry.getValue() + "\"").append(",");
+                sb.append(entry.getKey()).append(" as ").append(entry.getValue()).append(",");
             }
             sb.deleteCharAt(sb.length() - 1);
             sb.append(" from ").append(table);
