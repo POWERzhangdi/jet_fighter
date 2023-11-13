@@ -6,13 +6,13 @@ package com.jet.fighter.strategy;
  * 策略接口
  * 定义广泛的行为
  * <p>
- * Description: {@link StrategyBehaviorSelect }
+ * Description: {@link StrategyBehaviorSelector }
  *
  * @Author: di.zhang
  * @Date: 2022/8/26 17:23
  * @Version: v1.0
  */
-public interface StrategyBehaviorSelect<T> {
+public interface StrategyBehaviorSelector<T> {
 
     /**
      * 获取策略

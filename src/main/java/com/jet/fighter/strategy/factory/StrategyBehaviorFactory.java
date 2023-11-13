@@ -1,9 +1,9 @@
 package com.jet.fighter.strategy.factory;
 
-import com.jet.fighter.strategy.StrategyBehaviorSelect;
+import com.jet.fighter.strategy.StrategyBehaviorSelector;
 import com.jet.fighter.strategy.StrategyEnums;
-import com.jet.fighter.strategy.select.CatStrategyBehaviorSelect;
-import com.jet.fighter.strategy.select.DogStrategyBehaviorSelect;
+import com.jet.fighter.strategy.select.CatStrategyBehaviorSelector;
+import com.jet.fighter.strategy.select.DogStrategyBehaviorSelector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,18 +22,18 @@ import java.util.Objects;
  */
 public class StrategyBehaviorFactory {
 
-    private List<StrategyBehaviorSelect> selects;
+    private List<StrategyBehaviorSelector> selects;
 
     public StrategyBehaviorFactory() {
         selects = new ArrayList<>();
-        CatStrategyBehaviorSelect catSelect = new CatStrategyBehaviorSelect();
-        DogStrategyBehaviorSelect dogSelect = new DogStrategyBehaviorSelect();
+        CatStrategyBehaviorSelector catSelect = new CatStrategyBehaviorSelector();
+        DogStrategyBehaviorSelector dogSelect = new DogStrategyBehaviorSelector();
         selects.add(catSelect);
         selects.add(dogSelect);
         this.selects = selects;
     }
 
-    public StrategyBehaviorSelect getSelect(StrategyEnums strategyEnums) {
+    public StrategyBehaviorSelector getSelect(StrategyEnums strategyEnums) {
 
         if (null == strategyEnums) {
             throw new NullPointerException("策略行为不能为空");
