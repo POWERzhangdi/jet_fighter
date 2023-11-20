@@ -114,7 +114,7 @@ public class RSAUtils {
     }
 
     /**
-     * Description: 获取公钥
+     * Description: 获取私钥
      *
      * @Author: di.zhang
      * @Date: 2023/11/20 11:48
