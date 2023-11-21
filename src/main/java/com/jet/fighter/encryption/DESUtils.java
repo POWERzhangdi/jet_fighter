@@ -1,15 +1,9 @@
 package com.jet.fighter.encryption;
 
-import com.jet.fighter.binary.BaseConversionUtils;
 import com.jet.fighter.string.StringUtils;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 /**
@@ -17,15 +11,15 @@ import java.util.Base64;
  * <p>
  * DES 加密
  * <p>
- * Description: {@link DesUtils }
+ * Description: {@link DESUtils }
  *
  * @Author: di.zhang
  * @Date: 2022/8/26 16:28
  * @Version: v1.0
  */
-public class DesUtils {
+public class DESUtils {
 
-    private DesUtils() {
+    private DESUtils() {
 
     }
 
