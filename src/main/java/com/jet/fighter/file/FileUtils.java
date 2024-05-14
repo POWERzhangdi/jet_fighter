@@ -18,7 +18,7 @@ import java.nio.file.attribute.BasicFileAttributes;
  * <p>
  * 文件操作工具
  * <p>
- * Description: {@link FileToZipUtils }
+ * Description: {@link FileUtils }
  *
  * @Author: di.zhang
  * @Date: 2024/5/14 14:05
