@@ -1,4 +1,4 @@
-package com.jet.fighter.zip;
+package com.jet.fighter.file;
 
 
 import net.lingala.zip4j.ZipFile;

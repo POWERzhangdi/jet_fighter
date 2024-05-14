@@ -1,7 +1,6 @@
 package com.jet.fighter.file;
 
 import com.jet.fighter.string.StringUtils;
-import com.jet.fighter.zip.FileToZipUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
