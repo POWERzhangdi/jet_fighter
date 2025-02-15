@@ -52,7 +52,7 @@ public class DateTimeUtils {
         if (null == time) {
             throw new NullPointerException("DateTimeUtils formatLocalDateTimeToString time is null");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatLocalDateTimeToString format is blank");
         }
         return time.format(DateTimeFormatter.ofPattern(format));
@@ -68,19 +68,14 @@ public class DateTimeUtils {
      * @see LocalDateTime
      */
     public static LocalDateTime formatStringToLocalDateTime(String time, String format) {
-        if (null == time || time.length() == ZERO) {
+        if (null == time || time.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime time is blank");
         }
         if (time.length() < TIME_LENGTH) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime time format error");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime format is blank");
-        }
-
-        //当传入 yyyy-MM-dd || yyyy/MM/dd的数据时候
-        if (time.length() == TIME_LENGTH) {
-            return LocalDateTime.parse(time + START_LOCAL_DATE_TIME, DateTimeFormatter.ofPattern(format));
         }
 
         //当传入 T 处理 2022-01-01T13:11:09
@@ -109,7 +104,7 @@ public class DateTimeUtils {
         if (null == time) {
             throw new NullPointerException("DateTimeUtils formatLocalDateTimeToString time is null");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatLocalDateTimeToString format is blank");
         }
         if (null == locale) {
@@ -131,7 +126,7 @@ public class DateTimeUtils {
         if (null == time) {
             throw new NullPointerException("DateTimeUtils formatLocalDateToString time is null");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatLocalDateToString format is blank");
         }
         return time.format(DateTimeFormatter.ofPattern(format));
@@ -146,13 +141,13 @@ public class DateTimeUtils {
      * @Return java.time.LocalDate
      */
     public static LocalDate formatStringToLocalDate(String time, String format) {
-        if (null == time || time.length() == ZERO) {
+        if (null == time || time.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime time is blank");
         }
         if (time.length() < TIME_LENGTH) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime time format error");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalDateTime format is blank");
         }
 
@@ -176,7 +171,7 @@ public class DateTimeUtils {
         if (null == time) {
             throw new NullPointerException("DateTimeUtils formatLocalDateToString time is null");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatLocalDateToString format is blank");
         }
         if (null == locale) {
@@ -198,7 +193,7 @@ public class DateTimeUtils {
         if (null == time) {
             throw new NullPointerException("DateTimeUtils formatLocalTimeToString time is null");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatLocalTimeToString format is blank");
         }
         return time.format(DateTimeFormatter.ofPattern(format));
@@ -213,13 +208,13 @@ public class DateTimeUtils {
      * @Return java.time.LocalTime
      */
     public static LocalTime formatStringToLocalTime(String time, String format) {
-        if (null == time || time.length() == ZERO) {
+        if (null == time || time.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalTime time is blank");
         }
         if (!time.contains(COLON)) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalTime time format error");
         }
-        if (null == format || format.length() == ZERO) {
+        if (null == format || format.isEmpty()) {
             throw new NullPointerException("DateTimeUtils formatStringToLocalTime format is blank");
         }
 
@@ -319,49 +314,13 @@ public class DateTimeUtils {
      */
     public static String formatMinuteToHHmm(Long time) {
         if (null == time || Long.valueOf(0).equals(time)) {
-            throw new NullPointerException("DateTimeUtils formatLongToLocalTime time is null");
+            throw new NullPointerException("DateTimeUtils formatMinuteToHHmm time is null");
         }
 
-        StringBuffer buffer = new StringBuffer();
+        long hours = time / 60;
+        long minutes = time % 60;
 
-        if (time == UNIT) {
-            buffer.append("01:00");
-        }
-
-        if (time < UNIT) {
-            buffer.append("00:");
-            if (time < C_NUMBER || time == C_NUMBER) {
-                buffer.append("0" + time);
-            }
-
-            if (time > C_NUMBER) {
-                buffer.append(time);
-            }
-        }
-
-        if (time > UNIT) {
-            long hour = time / UNIT;
-            if (hour <= C_NUMBER) {
-                buffer.append("0" + hour);
-            } else {
-                buffer.append(hour);
-            }
-
-            buffer.append(":");
-
-            long diff = time - hour * UNIT;
-            if (diff == ZERO) {
-                buffer.append("00");
-            }
-            if (diff > ZERO && (diff < C_NUMBER || diff == C_NUMBER)) {
-                buffer.append("0" + diff);
-            }
-            if (diff > ZERO && diff > C_NUMBER) {
-                buffer.append(diff);
-            }
-        }
-
-        return buffer.toString();
+        return String.format("%02d:%02d", hours, minutes);
     }
 
     /**
@@ -548,23 +507,17 @@ public class DateTimeUtils {
      * @Return boolean
      */
     public static boolean compareHHmm(String startTime, String endTime) {
-        if (null == startTime || startTime.length() == ZERO) {
+        if (null == startTime || startTime.isEmpty()) {
             throw new NullPointerException("DateTimeUtils compareHHmm startTime is blank");
         }
-        if (null == endTime || endTime.length() == ZERO) {
+        if (null == endTime || endTime.isEmpty()) {
             throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
         }
-        if (startTime.charAt(2) != ':') {
-            throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
-        }
-        if (endTime.charAt(2) != ':') {
-            throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
-        }
-        boolean result = false;
-        if (startTime.compareTo(endTime) > ZERO) {
-            result = true;
-        }
-        return result;
+
+        LocalTime start = LocalTime.parse(startTime);
+        LocalTime end = LocalTime.parse(endTime);
+
+        return start.isAfter(end);
     }
 
     /**
@@ -581,23 +534,17 @@ public class DateTimeUtils {
      * @Return boolean
      */
     public static boolean compareEqualHHmm(String startTime, String endTime) {
-        if (null == startTime || startTime.length() == ZERO) {
-            throw new NullPointerException("DateTimeUtils compareHHmm startTime is blank");
+        if (null == startTime || startTime.isEmpty()) {
+            throw new NullPointerException("DateTimeUtils compareEqualHHmm startTime is blank");
         }
-        if (null == endTime || endTime.length() == ZERO) {
-            throw new NullPointerException("DateTimeUtils compareHHmm endTime is blank");
+        if (null == endTime || endTime.isEmpty()) {
+            throw new NullPointerException("DateTimeUtils compareEqualHHmm endTime is blank");
         }
-        if (startTime.charAt(2) != ':') {
-            throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm startTime format error");
-        }
-        if (endTime.charAt(2) != ':') {
-            throw new UnknownFormatFlagsException("DateTimeUtils compareHHmm endTime format error");
-        }
-        boolean result = false;
-        if (startTime.compareTo(endTime) == ZERO) {
-            result = true;
-        }
-        return result;
+
+        LocalTime start = LocalTime.parse(startTime);
+        LocalTime end = LocalTime.parse(endTime);
+
+        return start.equals(end);
     }
 
 
@@ -629,11 +576,6 @@ public class DateTimeUtils {
 
         long diffTime = ZERO;
 
-        Duration duration = null;
-        if (timeUnit != TimeUnit.YEARS || timeUnit != TimeUnit.MONTHS) {
-            duration = Duration.between(startTime, endTime);
-        }
-
         switch (timeUnit) {
             case YEARS:
                 diffTime = ChronoUnit.YEARS.between(startTime, endTime);
@@ -642,22 +584,22 @@ public class DateTimeUtils {
                 diffTime = ChronoUnit.MONTHS.between(startTime, endTime);
                 break;
             case DAYS:
-                diffTime = duration.toDays();
+                diffTime = ChronoUnit.DAYS.between(startTime, endTime);
                 break;
             case HOURS:
-                diffTime = duration.toHours();
+                diffTime = ChronoUnit.HOURS.between(startTime, endTime);
                 break;
             case MINUTES:
-                diffTime = duration.toMinutes();
+                diffTime = ChronoUnit.MINUTES.between(startTime, endTime);
                 break;
             case SECONDS:
-                diffTime = duration.toMillis() / 1000;
+                diffTime = ChronoUnit.SECONDS.between(startTime, endTime);
                 break;
             case MILLIS:
-                diffTime = duration.toMillis();
+                diffTime = ChronoUnit.MILLIS.between(startTime, endTime);
                 break;
             case NANOS:
-                diffTime = duration.toNanos();
+                diffTime = ChronoUnit.NANOS.between(startTime, endTime);
                 break;
         }
 
@@ -683,7 +625,6 @@ public class DateTimeUtils {
      * @Return long
      */
     public static long diffLocalDate(LocalDate startTime, LocalDate endTime, TimeUnit timeUnit, boolean abs) {
-
         if (null == startTime) {
             throw new NullPointerException("DateTimeUtils diffLocalDate startTime is null");
         }
@@ -696,21 +637,20 @@ public class DateTimeUtils {
 
         long diffTime = ZERO;
 
-         Period period = null;
-        if (timeUnit != TimeUnit.YEARS || timeUnit != TimeUnit.MONTHS) {
-            period = Period.between(startTime, endTime);
-        }
+        Period period = Period.between(startTime, endTime);
 
         switch (timeUnit) {
             case YEARS:
                 diffTime = period.getYears();
                 break;
             case MONTHS:
-                diffTime =  period.getMonths();
+                diffTime = period.getMonths();
                 break;
             case DAYS:
                 diffTime = period.getDays();
                 break;
+            default:
+                throw new IllegalArgumentException("DateTimeUtils diffLocalDate timeUnit is not supported for LocalDate");
         }
 
         if (abs) {
@@ -764,6 +704,6 @@ public class DateTimeUtils {
             return type;
         }
 
-        private String type;
+        private final String type;
     }
 }
